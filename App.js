@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     margin: 20,
-    fontSize: 28
+    fontSize: 26
   }
 });

@@ -6,7 +6,7 @@ import { haze, rainy, snow, sunny, defaultImg } from '../../assets/Images/backgr
 const Weather = ({ weatherData,fetchWeatherData }) => {
 
     const [backgroundImage, setBackgroundImage] = useState(null);
-    const { weather, name, main: { temp, humidity }, wind: { speed } } = weatherData;
+    const { weather, name, main: { temp, humidity,feels_like }, wind: { speed }, sys:{message} } = weatherData;
     const [{ main }] = weather;
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const Weather = ({ weatherData,fetchWeatherData }) => {
         if (weather === 'Haze') return haze
         return defaultImg;
     }
-    let textColor = backgroundImage !== sunny ? 'white' : 'black'
+    let textColor = 'white';
 
     return (
         <View style={styles.container}>
@@ -33,8 +33,9 @@ const Weather = ({ weatherData,fetchWeatherData }) => {
                 <SearchBar fetchWeatherData={fetchWeatherData} />
                 <View style={{ alignItems: 'center' }}>
                     <Text style={{ ...styles.headerText, color: textColor, fontWeight: 'bold', fontSize: 46 }}>{name}</Text>
-                    <Text style={{ ...styles.headerText, color: textColor, fontWeight: 'bold' }}>{main}</Text>
-                    <Text style={{ ...styles.headerText, color: textColor, }}>{temp} °C</Text>
+                    <Text style={{ ...styles.headerText, color: textColor, fontSize: 38}}>{main}</Text>
+                    <Text style={{ ...styles.headerText, color: textColor, fontSize: 34}}>{temp} °C</Text>
+                    <Text style={{ ...styles.headerText, color: textColor, }}>@Feels like{feels_like} °C</Text>
                 </View>
                 <View style={styles.extraInfo}>
                     <View style={styles.info}>
@@ -45,6 +46,9 @@ const Weather = ({ weatherData,fetchWeatherData }) => {
                         <Text style={{ fontSize: 22, color: 'white' }}>Wind Speed</Text>
                         <Text style={{ fontSize: 22, color: 'white' }}>{speed} m/s</Text>
                     </View>
+                </View>
+                <View style={{ alignItems: 'center' }}>
+                    <Text style={{ ...styles.headerText, color: textColor, fontWeight: 'bold', fontSize: 46 }}>{message}</Text>
                 </View>
             </ImageBackground>
         </View>
@@ -63,11 +67,11 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 36,
-        marginTop: 10,
+        marginTop: 20,
     },
     extraInfo: {
         flexDirection: 'row',
-        marginTop: 20,
+        marginTop: 35,
         justifyContent: 'space-between',
         padding: 10
     },
